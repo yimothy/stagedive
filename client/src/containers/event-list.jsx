@@ -12,6 +12,13 @@ class EventList extends Component {
   }
 
   renderList() {
+    if(this.props.events.length === 0) {
+      return (
+        <div>
+          No Events Found.
+        </div>
+      )
+    }
     let imageDiv = {
       width: '35%',
       float: 'left',
@@ -20,15 +27,15 @@ class EventList extends Component {
     let imageStyle = {
       width: '100%',
     };
-    // const dateStr = this.props.userInfo[0].createdOn.slice(0,19);
-    // let currentDate = new Date(dateStr);
-    //
-    // let futureEvents = this.props.events.filter((event) => {
-    //   let eventDate = new Date(event.date.slice(0,19));
-    //   return eventDate > currentDate;
-    // });
+    let currentDate = new Date();
 
-    return this.props.events.map((event) => {
+
+    return this.props.events.sort((a, b) => {
+      let aDate = new Date(a.date.slice(0,10));
+      let bDate = new Date(b.date.slice(0,10));
+      return aDate - bDate;
+    })
+    .map((event) => {
       let date = event.date.slice(5, 10) + '-' + event.date.slice(0, 4);
       // let dateObj = new Date(event.date.slice(0,10));
       // let date = dateObj.toString();
